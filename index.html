@@ -88,8 +88,8 @@ button {
   position: absolute;
 }
 
-#yesBtn { left: 0; top: 0; }
-#noBtn { left: 120px; top: 0; background: #aaa; }
+#yesBtn { left: 0; top: 0; display: none; }
+#noBtn { left: 120px; top: 0; background: #aaa; display: none; }
 
 .message {
   display: none;
@@ -103,6 +103,16 @@ button {
   font-size: 14px;
   color: #555;
   display: none;
+}
+
+.qr {
+  margin-top: 15px;
+  display: none;
+}
+
+.qr img {
+  width: 150px;
+  border-radius: 10px;
 }
 </style>
 </head>
@@ -124,8 +134,7 @@ button {
   <div class="content">
 
     <!-- Name input -->
-    <input id="herName" placeholder="Your name ❤️">
-
+    <input id="herName" placeholder="Enter your name ❤️">
     <p id="nameText"></p>
 
     <!-- Yes / No buttons -->
@@ -140,6 +149,12 @@ button {
 
     <!-- Countdown -->
     <div class="countdown" id="countdown"></div>
+
+    <!-- QR Code -->
+    <div class="qr" id="qrCode">
+      <p>Scan this 💖</p>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://mrtallandmrsshort-max.github.io/valentine/">
+    </div>
 
   </div>
 </div>
@@ -159,14 +174,30 @@ setInterval(() => {
   slides[index].classList.add('active');
 }, 2500);
 
-// Name reveal
-document.getElementById("herName").addEventListener("input", e => {
-  document.getElementById("nameText").innerText =
-    e.target.value ? `${e.target.value}, will you be my Valentine? 💕` : "";
+// Name input handler
+const herNameInput = document.getElementById("herName");
+const nameText = document.getElementById("nameText");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const qrCode = document.getElementById("qrCode");
+
+herNameInput.addEventListener("input", () => {
+  const name = herNameInput.value.trim();
+  if (name) {
+    nameText.innerText = `${name}, will you be my Valentine? 💕`;
+    yesBtn.style.display = "block";
+    noBtn.style.display = "block";
+    qrCode.style.display = "block"; // show QR code now too
+  } else {
+    nameText.innerText = "";
+    yesBtn.style.display = "none";
+    noBtn.style.display = "none";
+    qrCode.style.display = "none";
+  }
 });
 
 // Yes button
-document.getElementById("yesBtn").addEventListener("click", () => {
+yesBtn.addEventListener("click", () => {
   const msg = document.getElementById("msg");
   const countdown = document.getElementById("countdown");
 
@@ -179,10 +210,7 @@ document.getElementById("yesBtn").addEventListener("click", () => {
 });
 
 // No button jumps randomly
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
 const buttonsDiv = document.querySelector(".buttons");
-
 noBtn.addEventListener("mouseover", () => {
   const divWidth = buttonsDiv.offsetWidth - noBtn.offsetWidth;
   const divHeight = buttonsDiv.offsetHeight - noBtn.offsetHeight;
