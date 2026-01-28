@@ -28,9 +28,18 @@ body {
   border-bottom: 1px solid #ddd;
 }
 
+/* ❤️ Heartbeat */
+.heartbeat {
+  animation: beat 1s infinite;
+}
+@keyframes beat {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
 .slideshow {
   width: 100%;
-  aspect-ratio: 4 / 5;   /* Instagram-style ratio */
+  aspect-ratio: 4 / 5;
   overflow: hidden;
   background: #000;
 }
@@ -38,8 +47,7 @@ body {
 .slideshow img {
   width: 100%;
   height: 100%;
-  object-fit: cover;    /* fills container, crops excess */
-  object-position: center;
+  object-fit: cover;
   display: none;
 }
 
@@ -47,16 +55,28 @@ body {
   display: block;
 }
 
-
 .content {
   padding: 15px;
   text-align: center;
 }
 
-button {
-  margin-top: 15px;
-  padding: 12px;
+input {
   width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+button {
+  flex: 1;
+  padding: 12px;
   border: none;
   border-radius: 8px;
   background: #ff4d6d;
@@ -65,8 +85,9 @@ button {
   cursor: pointer;
 }
 
-button:hover {
-  background: #ff1e4d;
+#noBtn {
+  background: #aaa;
+  position: relative;
 }
 
 .message {
@@ -76,13 +97,10 @@ button:hover {
   color: #ff4d6d;
 }
 
-.qr {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.qr img {
-  width: 150px;
+.countdown {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
 }
 </style>
 </head>
@@ -91,37 +109,36 @@ button:hover {
 
 <div class="container">
 
-  <div class="header">❤️ My Valentine</div>
+  <div class="header" id="heartHeader">❤️ My Valentine</div>
 
-  <!-- 🖼️ Slideshow -->
+  <!-- Slideshow -->
   <div class="slideshow">
     <img src="pic1.jpg" class="active">
     <img src="pic2.jpg">
     <img src="pic3.jpg">
     <img src="pic4.jpg">
-    <img src="pic5.jpg">
-    <img src="pic6.jpg">
-    <img src="pic7.jpg">
-    <img src="pic8.jpg">
   </div>
 
   <div class="content">
-    <p>
-      Every little moment with you feels like a story  
-      I want to keep forever 💕
-    </p>
 
-    <button onclick="startLove()">Will you be my Valentine? 💌</button>
+    <!-- Name input -->
+    <input id="herName" placeholder="Your name ❤️">
+
+    <p id="nameText"></p>
+
+    <!-- Yes / No buttons -->
+    <div class="buttons">
+      <button onclick="sayYes()">Yes ❤️</button>
+      <button id="noBtn" onmouseover="runAway()">No 🙈</button>
+    </div>
 
     <div class="message" id="msg">
-      You just made my heart smile ❤️
+      You just made my heart smile forever 💖
     </div>
 
-    <!-- 🔗 QR Code -->
-    <div class="qr">
-      <p>Scan this 💖</p>
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://mrtallandmrsshort-max.github.io/valentine/">
-    </div>
+    <!-- Countdown -->
+    <div class="countdown" id="countdown"></div>
+
   </div>
 </div>
 
@@ -131,22 +148,47 @@ button:hover {
 </audio>
 
 <script>
+// Slideshow
 let index = 0;
 const slides = document.querySelectorAll('.slideshow img');
-
 setInterval(() => {
   slides[index].classList.remove('active');
   index = (index + 1) % slides.length;
   slides[index].classList.add('active');
 }, 2500);
 
-function startLove() {
+// Name reveal
+document.getElementById("herName").addEventListener("input", e => {
+  document.getElementById("nameText").innerText =
+    e.target.value ? `${e.target.value}, will you be my Valentine? 💕` : "";
+});
+
+// Yes button
+function sayYes() {
   document.getElementById("msg").style.display = "block";
   document.getElementById("music").play();
+  document.getElementById("heartHeader").classList.add("heartbeat");
 }
+
+// No button runs away 😄
+function runAway() {
+  const btn = document.getElementById("noBtn");
+  btn.style.left = Math.random()*120 - 60 + "px";
+  btn.style.top  = Math.random()*40  - 20 + "px";
+}
+
+// Countdown
+function updateCountdown() {
+  const valentine = new Date("Feb 14, 2026");
+  const now = new Date();
+  const days = Math.ceil((valentine - now) / (1000*60*60*24));
+  document.getElementById("countdown").innerText =
+    days > 0 ? `${days} days until Valentine’s Day 💞` : "Happy Valentine’s Day ❤️";
+}
+updateCountdown();
+setInterval(updateCountdown, 60000);
 </script>
 
 </body>
 </html>
-
 
