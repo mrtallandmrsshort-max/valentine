@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+  background: #fafafa;
+}
+
+.container {
+  max-width: 400px;
+  margin: auto;
+  background: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 12px;
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+
+.slideshow {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.slideshow img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  display: none;
+}
+
+.slideshow img.active {
+  display: block;
+}
+
+.content {
+  padding: 15px;
+  text-align: center;
+}
+
+button {
+  margin-top: 15px;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #ff4d6d;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ff1e4d;
+}
+
+.message {
+  display: none;
+  margin-top: 15px;
+  font-size: 18px;
+  color: #ff4d6d;
+}
+
+.qr {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.qr img {
+  width: 150px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">❤️ My Valentine</div>
+
+  <!-- 🖼️ Slideshow -->
+  <div class="slideshow">
+    <img src="pic1.jpg" class="active">
+    <img src="pic2.jpg">
+    <img src="pic3.jpg">
+    <img src="pic4.jpg">
+  </div>
+
+  <div class="content">
+    <p>
+      Every little moment with you feels like a story  
+      I want to keep forever 💕
+    </p>
+
+    <button onclick="startLove()">Will you be my Valentine? 💌</button>
+
+    <div class="message" id="msg">
+      You just made my heart smile ❤️
+    </div>
+
+    <!-- 🔗 QR Code -->
+    <div class="qr">
+      <p>Scan this 💖</p>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=OPEN_THIS_PAGE_LINK">
+    </div>
+  </div>
+</div>
+
+<!-- 🎵 Music -->
+<audio id="music" loop>
+  <source src="romantic.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let index = 0;
+const slides = document.querySelectorAll('.slideshow img');
+
+setInterval(() => {
+  slides[index].classList.remove('active');
+  index = (index + 1) % slides.length;
+  slides[index].classList.add('active');
+}, 2500);
+
+function startLove() {
+  document.getElementById("msg").style.display = "block";
+  document.getElementById("music").play();
+}
+</script>
+
+</body>
+</html>
