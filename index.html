@@ -29,22 +29,24 @@ body {
 }
 
 .slideshow {
-  position: relative;
   width: 100%;
-  height: 300px;
+  aspect-ratio: 4 / 5;   /* Instagram-style ratio */
   overflow: hidden;
+  background: #000;
 }
 
 .slideshow img {
   width: 100%;
-  height: 300px;
-  object-fit: cover;
+  height: 100%;
+  object-fit: cover;    /* fills container, crops excess */
+  object-position: center;
   display: none;
 }
 
 .slideshow img.active {
   display: block;
 }
+
 
 .content {
   padding: 15px;
@@ -146,4 +148,5 @@ function startLove() {
 
 </body>
 </html>
+
 
