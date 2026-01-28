@@ -104,16 +104,6 @@ button {
   color: #555;
   display: none;
 }
-
-.qr {
-  margin-top: 15px;
-  display: none;
-}
-
-.qr img {
-  width: 150px;
-  border-radius: 10px;
-}
 </style>
 </head>
 
@@ -154,12 +144,6 @@ button {
     <!-- Countdown -->
     <div class="countdown" id="countdown"></div>
 
-    <!-- QR Code -->
-    <div class="qr" id="qrCode">
-      <p>Scan this 💖</p>
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://mrtallandmrsshort-max.github.io/valentine/">
-    </div>
-
   </div>
 </div>
 
@@ -189,25 +173,22 @@ const herNameInput = document.getElementById("herName");
 const nameText = document.getElementById("nameText");
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
-const qrCode = document.getElementById("qrCode");
 const msg = document.getElementById("msg");
 const countdown = document.getElementById("countdown");
 const heartHeader = document.getElementById("heartHeader");
 const buttonsDiv = document.querySelector(".buttons");
 
-// Show buttons and QR after entering name
+// Show buttons after entering name
 herNameInput.addEventListener("input", () => {
   const name = herNameInput.value.trim();
   if (name) {
     nameText.innerText = `${name}, will you be my Valentine? 💕`;
     yesBtn.style.display = "block";
     noBtn.style.display = "block";
-    qrCode.style.display = "block";
   } else {
     nameText.innerText = "";
     yesBtn.style.display = "none";
     noBtn.style.display = "none";
-    qrCode.style.display = "none";
   }
 });
 
