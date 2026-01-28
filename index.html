@@ -148,7 +148,7 @@ button {
     </div>
 
     <div class="message" id="msg">
-      BATHALI just made my heart smile forever 💖
+      You just made my heart smile forever 💖
     </div>
 
     <!-- Countdown -->
@@ -163,12 +163,18 @@ button {
   </div>
 </div>
 
-<!-- Music plays immediately -->
-<audio id="music" autoplay loop>
+<!-- Music -->
+<audio id="music" loop>
   <source src="romantic.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+// Music: play on first click to bypass browser restrictions
+const music = document.getElementById("music");
+document.addEventListener("click", () => {
+  if (music.paused) music.play();
+}, { once: true });
+
 // Slideshow
 let index = 0;
 const slides = document.querySelectorAll('.slideshow img');
@@ -178,20 +184,25 @@ setInterval(() => {
   slides[index].classList.add('active');
 }, 2500);
 
-// Name input handler
+// Elements
 const herNameInput = document.getElementById("herName");
 const nameText = document.getElementById("nameText");
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const qrCode = document.getElementById("qrCode");
+const msg = document.getElementById("msg");
+const countdown = document.getElementById("countdown");
+const heartHeader = document.getElementById("heartHeader");
+const buttonsDiv = document.querySelector(".buttons");
 
+// Show buttons and QR after entering name
 herNameInput.addEventListener("input", () => {
   const name = herNameInput.value.trim();
   if (name) {
     nameText.innerText = `${name}, will you be my Valentine? 💕`;
     yesBtn.style.display = "block";
     noBtn.style.display = "block";
-    qrCode.style.display = "block"; // show QR code now too
+    qrCode.style.display = "block";
   } else {
     nameText.innerText = "";
     yesBtn.style.display = "none";
@@ -200,21 +211,15 @@ herNameInput.addEventListener("input", () => {
   }
 });
 
-// Yes button
+// Yes button click
 yesBtn.addEventListener("click", () => {
-  const msg = document.getElementById("msg");
-  const countdown = document.getElementById("countdown");
-
   msg.style.display = "block";
   countdown.style.display = "block";
-
-  document.getElementById("heartHeader").classList.add("heartbeat");
-
+  heartHeader.classList.add("heartbeat");
   startCountdown();
 });
 
 // No button jumps randomly
-const buttonsDiv = document.querySelector(".buttons");
 noBtn.addEventListener("mouseover", () => {
   const divWidth = buttonsDiv.offsetWidth - noBtn.offsetWidth;
   const divHeight = buttonsDiv.offsetHeight - noBtn.offsetHeight;
@@ -228,7 +233,6 @@ noBtn.addEventListener("mouseover", () => {
 
 // Countdown function
 function startCountdown() {
-  const countdown = document.getElementById("countdown");
   function update() {
     const valentine = new Date("Feb 14, 2026");
     const now = new Date();
@@ -242,5 +246,3 @@ function startCountdown() {
 
 </body>
 </html>
-
-
